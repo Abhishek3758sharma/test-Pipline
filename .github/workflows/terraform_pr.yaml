@@ -1,0 +1,78 @@
+name: Self Hosted Runner - Terraform Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  terraform-test:
+    name: Terraform Test on Self Hosted Runner
+    runs-on: self-hosted
+
+    steps:
+
+      # 1. Checkout Repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Show Runner Information
+      - name: Runner Information
+        shell: powershell
+        run: |
+          Write-Host "===================================="
+          Write-Host "Self Hosted Runner Information"
+          Write-Host "===================================="
+
+          Write-Host "Runner Name: $env:RUNNER_NAME"
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          Write-Host "Runner Architecture: $env:RUNNER_ARCH"
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+
+          Write-Host ""
+          Write-Host "Hostname:"
+          hostname
+
+      # 3. Check Git
+      - name: Check Git
+        shell: powershell
+        run: |
+          Write-Host "Git Version:"
+          git --version
+
+      # 4. Check Azure CLI
+      - name: Check Azure CLI
+        shell: powershell
+        run: |
+          Write-Host "Azure CLI Version:"
+          az version
+
+      # 5. Check Terraform
+      - name: Check Terraform
+        shell: powershell
+        run: |
+          Write-Host "Terraform Version:"
+          terraform version
+
+      # 6. Terraform Format Check
+      - name: Terraform Format Check
+        shell: powershell
+        run: |
+          terraform fmt -check -recursive
+
+      # 7. Terraform Init
+      - name: Terraform Init
+        shell: powershell
+        run: |
+          terraform init
+
+      # 8. Terraform Validate
+      - name: Terraform Validate
+        shell: powershell
+        run: |
+          terraform validate
+
+      # 9. Terraform Plan
+      - name: Terraform Plan
+        shell: powershell
+        run: |
+          terraform plan
