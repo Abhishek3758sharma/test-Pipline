@@ -1,6 +1,14 @@
 name: Self Hosted Runner - Terraform Test
 
 on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
   workflow_dispatch:
 
 jobs:
@@ -56,23 +64,27 @@ jobs:
       # 6. Terraform Format Check
       - name: Terraform Format Check
         shell: powershell
+        working-directory: ./root
         run: |
           terraform fmt -check -recursive
 
       # 7. Terraform Init
       - name: Terraform Init
         shell: powershell
+        working-directory: ./root
         run: |
           terraform init
 
       # 8. Terraform Validate
       - name: Terraform Validate
         shell: powershell
+        working-directory: ./root
         run: |
           terraform validate
 
       # 9. Terraform Plan
       - name: Terraform Plan
         shell: powershell
+        working-directory: ./root
         run: |
           terraform plan
