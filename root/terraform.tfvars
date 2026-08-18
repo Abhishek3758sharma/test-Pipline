@@ -3,6 +3,10 @@ rgs_value = {
     name     = "Rg-load"
     location = "centralindia"
   }
+   rg2 = {
+    name     = "Rg-load2"
+    location = "centralindia"
+  }
 }
 vnet_value = {
   vnet = {
